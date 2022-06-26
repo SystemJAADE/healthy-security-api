@@ -15,10 +15,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class HealthySecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private List<String> listPublicsEndpoints = Collections.singletonList("/api/token");
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -42,9 +47,14 @@ public class HealthySecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    protected void addPublicEndpoint(String endpoint) {
+        listPublicsEndpoints.add(endpoint);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/api/token")
+        http.csrf().disable().authorizeRequests().antMatchers(listPublicsEndpoints.toArray(new String[0]))
                 .permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
