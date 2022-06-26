@@ -22,7 +22,6 @@ import java.util.List;
 @EnableWebSecurity
 public class HealthySecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private List<String> listPublicsEndpoints = Collections.singletonList("/api/token");
 
     @Autowired
@@ -47,7 +46,6 @@ public class HealthySecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
     protected void addPublicEndpoint(String endpoint) {
         listPublicsEndpoints.add(endpoint);
     }
