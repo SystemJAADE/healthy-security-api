@@ -3,6 +3,7 @@ package com.systemjaade.healthy.config;
 import com.systemjaade.healthy.filter.HealthySecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
+@ComponentScan
 @EnableWebSecurity
 public class HealthySecurityConfig extends WebSecurityConfigurerAdapter {
 
